@@ -1,0 +1,14 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header>
+        <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+        <input name="name" type="text" value="{{actor.name}}" placeholder="Nom"/>
+    </header>
+
+    <div class="stats">
+        {{#each system.stats as |value key|}}
+        <button type="button" class="stat-roll" data-stat="{{key}}" data-value="{{value}}">
+            {{key}}: {{value}}
+        </button>
+        {{/each}}
+    </div>
+</form>
