@@ -14,18 +14,22 @@ Hooks.once("init", () => {
   console.log("Karakurten | Initialisation du système");
 
   // Enregistrement des feuilles d'acteur
-  Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("karakurten", KarakurtenActorSheet, {
-    types: ["personnage"],
-    makeDefault: true,
-    label: "Feuille de Personnage Karakurten"
-  });
+
+ foundry.documents.collections.Actors.registerSheet(
+		"karakurten",
+		KarakurtenActorSheet,
+		{
+			types: ["personnage"],
+			makeDefault: true,
+      label: "Feuille de Personnage Karakurten"
+		}
+	);
 
   // Helpers Handlebars
   _registerHandlebarsHelpers();
 
   // Pré-chargement des templates
-  loadTemplates([
+  foundry.applications.handlebars.loadTemplates([
     "systems/karakurten/templates/actor-sheet.hbs",
     "systems/karakurten/templates/roll-dialog.hbs"
   ]);
@@ -50,7 +54,7 @@ function _registerHandlebarsHelpers() {
   // Pourcentage HP (clampé entre 0 et 100)
   Handlebars.registerHelper("hpPercent", (current, max) => {
     if (!max || max <= 0) return 0;
-    return Math.clamped(Math.round((current / max) * 100), 0, 100);
+    return Math.clamp(Math.round((current / max) * 100), 0, 100);
   });
 }
 
