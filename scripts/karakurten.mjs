@@ -21,7 +21,7 @@ Hooks.once("init", () => {
 		{
 			types: ["personnage"],
 			makeDefault: true,
-      label: "Feuille de Personnage Karakurten"
+      		label: "Feuille de Personnage Karakurten"
 		}
 	);
 
