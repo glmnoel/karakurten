@@ -1,0 +1,128 @@
+<div class="kk-sheet">
+
+  {{!-- HEADER: Photo + Identité --}}
+  <header class="kk-header">
+    <div class="kk-photo-wrapper">
+      <img class="kk-photo"
+           src="{{document.system.identite.photographie}}"
+           data-edit="system.identite.photographie"
+           title="{{localize 'KARAKURTEN.Photographie'}}"
+           onerror="this.src='icons/svg/mystery-man.svg'" />
+    </div>
+
+    <div class="kk-identite-grid">
+      <div class="kk-field">
+        <label>{{localize "KARAKURTEN.Nom"}}</label>
+        <input type="text" name="system.identite.nom"
+               value="{{document.system.identite.nom}}" placeholder="—"/>
+      </div>
+      <div class="kk-field">
+        <label>{{localize "KARAKURTEN.Prenom"}}</label>
+        <input type="text" name="system.identite.prenom"
+               value="{{document.system.identite.prenom}}" placeholder="—"/>
+      </div>
+      <div class="kk-field">
+        <label>{{localize "KARAKURTEN.Sexe"}}</label>
+        <select name="system.identite.sexe">
+          <option value="Masculin" {{#if (eq document.system.identite.sexe "Masculin")}}selected{{/if}}>
+            {{localize "KARAKURTEN.Masculin"}}
+          </option>
+          <option value="Feminin" {{#if (eq document.system.identite.sexe "Feminin")}}selected{{/if}}>
+            {{localize "KARAKURTEN.Feminin"}}
+          </option>
+          <option value="N/A" {{#if (eq document.system.identite.sexe "N/A")}}selected{{/if}}>
+            {{localize "KARAKURTEN.NA"}}
+          </option>
+        </select>
+      </div>
+      <div class="kk-field">
+        <label>{{localize "KARAKURTEN.Age"}}</label>
+        <input type="text" name="system.identite.age"
+               value="{{document.system.identite.age}}" placeholder="—"/>
+      </div>
+      <div class="kk-field">
+        <label>{{localize "KARAKURTEN.Taille"}}</label>
+        <input type="text" name="system.identite.taille"
+               value="{{document.system.identite.taille}}" placeholder="—"/>
+      </div>
+      <div class="kk-field">
+        <label>{{localize "KARAKURTEN.Nationalite"}}</label>
+        <input type="text" name="system.identite.nationalite"
+               value="{{document.system.identite.nationalite}}" placeholder="—"/>
+      </div>
+      <div class="kk-field">
+        <label>{{localize "KARAKURTEN.Langue"}}</label>
+        <input type="text" name="system.identite.langue"
+               value="{{document.system.identite.langue}}" placeholder="—"/>
+      </div>
+      <div class="kk-field">
+        <label>{{localize "KARAKURTEN.Profession"}}</label>
+        <input type="text" name="system.identite.profession"
+               value="{{document.system.identite.profession}}" placeholder="—"/>
+      </div>
+    </div>
+  </header>
+
+  {{!-- CORPS DE LA FICHE --}}
+  <div class="kk-body">
+
+    {{!-- STATISTIQUES --}}
+    <section class="kk-section kk-stats-section">
+      <h2 class="kk-section-title">{{localize "KARAKURTEN.Statistiques"}}</h2>
+      <div class="kk-stats-grid">
+
+        {{#each document.system.statistiques as |stat key|}}
+        <div class="kk-stat-block" data-stat-key="{{key}}">
+          <div class="kk-stat-label">{{stat.label}}</div>
+          <div class="kk-stat-controls">
+            <button type="button" class="kk-stat-btn kk-stat-minus" data-action="stat-minus" data-stat="{{key}}">−</button>
+            <div class="kk-stat-value kk-rollable" data-action="roll-stat" data-stat="{{key}}" title="Cliquer pour lancer le dé">
+              {{stat.valeur}}
+            </div>
+            <button type="button" class="kk-stat-btn kk-stat-plus" data-action="stat-plus" data-stat="{{key}}">+</button>
+          </div>
+          <div class="kk-stat-pips">
+            {{#each (times 9) as |i|}}
+            <span class="kk-pip {{#if (lte i ../stat.valeur)}}kk-pip-active{{/if}}"></span>
+            {{/each}}
+          </div>
+        </div>
+        {{/each}}
+
+      </div>
+    </section>
+
+    {{!-- POINTS DE VIE --}}
+    <section class="kk-section kk-hp-section">
+      <h2 class="kk-section-title">{{localize "KARAKURTEN.PointsDeVie"}}</h2>
+      <div class="kk-hp-bar-wrapper">
+        <input type="number" class="kk-hp-current" name="system.pointsDeVie.valeur"
+               value="{{document.system.pointsDeVie.valeur}}" min="0"
+               max="{{document.system.pointsDeVie.max}}"/>
+        <span class="kk-hp-sep">/</span>
+        <input type="number" class="kk-hp-max" name="system.pointsDeVie.max"
+               value="{{document.system.pointsDeVie.max}}" min="1"/>
+      </div>
+      <div class="kk-hp-bar">
+        <div class="kk-hp-fill"
+             style="width: {{hpPercent document.system.pointsDeVie.valeur document.system.pointsDeVie.max}}%">
+        </div>
+      </div>
+    </section>
+
+    {{!-- COMPÉTENCES --}}
+    <section class="kk-section">
+      <h2 class="kk-section-title">{{localize "KARAKURTEN.Competences"}}</h2>
+      <textarea class="kk-textarea" name="system.competences"
+                placeholder="Liste des compétences particulières...">{{document.system.competences}}</textarea>
+    </section>
+
+    {{!-- HISTORIQUE --}}
+    <section class="kk-section">
+      <h2 class="kk-section-title">{{localize "KARAKURTEN.Historique"}}</h2>
+      <textarea class="kk-textarea kk-textarea-tall" name="system.historique"
+                placeholder="Historique du personnage...">{{document.system.historique}}</textarea>
+    </section>
+
+  </div>
+</div>

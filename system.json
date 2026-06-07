@@ -1,0 +1,43 @@
+{
+  "id": "karakurten",
+  "title": "Karakurten",
+  "description": "Système de jeu de rôle Karakurten pour Foundry VTT.",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "14"
+  },
+  "authors": [
+    {
+      "name": "Karakurten Team"
+    }
+  ],
+  "esmodules": [
+    "scripts/karakurten.mjs"
+  ],
+  "styles": [
+    "styles/karakurten.css"
+  ],
+  "languages": [
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "lang/fr.json"
+    },
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "personnage": {}
+    },
+    "Item": {}
+  },
+  "socket": false,
+  "url": "",
+  "manifest": "",
+  "download": ""
+}

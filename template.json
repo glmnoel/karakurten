@@ -1,0 +1,53 @@
+{
+  "Actor": {
+    "types": ["personnage"],
+    "personnage": {
+      "identite": {
+        "nom": "",
+        "prenom": "",
+        "sexe": "N/A",
+        "age": "",
+        "taille": "",
+        "nationalite": "",
+        "langue": "",
+        "profession": "",
+        "photographie": ""
+      },
+      "statistiques": {
+        "force": {
+          "label": "Force / Constitution",
+          "valeur": 5,
+          "min": 1,
+          "max": 9
+        },
+        "agilite": {
+          "label": "Agilité / Dextérité",
+          "valeur": 5,
+          "min": 1,
+          "max": 9
+        },
+        "intelligence": {
+          "label": "Intelligence / Psychologie",
+          "valeur": 5,
+          "min": 1,
+          "max": 9
+        },
+        "observation": {
+          "label": "Sens de L'Observation / Anticipation",
+          "valeur": 5,
+          "min": 1,
+          "max": 9
+        }
+      },
+      "competences": "",
+      "historique": "",
+      "pointsDeVie": {
+        "valeur": 10,
+        "max": 10
+      }
+    }
+  },
+  "Item": {
+    "types": []
+  }
+}
