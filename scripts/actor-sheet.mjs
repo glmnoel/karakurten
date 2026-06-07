@@ -5,7 +5,8 @@
 
 import { KarakurtenRoll } from "./roll.mjs";
 
-const { ActorSheetV2, HandlebarsApplicationMixin } = foundry.applications.sheets;
+const { HandlebarsApplicationMixin } = foundry.applications.api;
+const { ActorSheetV2 } = foundry.applications.sheets;
 
 export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
