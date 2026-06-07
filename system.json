@@ -1,9 +1,0 @@
-{
-  "id": "karakurten",
-  "title": "Karakurten",
-  "description": "Système de jeu pour Karakurten",
-  "version": "1.0.0",
-  "template": "template.json",
-  "esmodules": ["module/karakurten.js"],
-  "styles": ["css/style.css"]
-}
