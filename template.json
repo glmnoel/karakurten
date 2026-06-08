@@ -42,8 +42,7 @@
       "competences": "",
       "historique": "",
       "pointsDeVie": {
-        "valeur": 10,
-        "max": 10
+        "valeur": 5
       }
     }
   },
