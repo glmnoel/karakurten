@@ -515,3 +515,160 @@
 .kk-sheet::-webkit-scrollbar-thumb:hover {
   background: var(--kk-gold);
 }
+
+/* ============================================================
+   MODE ÉDITION / LECTURE
+   ============================================================ */
+
+/* Champs texte en mode lecture */
+.kk-field-value {
+  display:        block;
+  padding:        4px 6px;
+  color:          var(--kk-text);
+  font-size:      13px;
+  min-height:     26px;
+  border-bottom:  1px solid transparent;
+}
+
+.kk-textarea-readonly {
+  width:          100%;
+  min-height:     80px;
+  padding:        8px;
+  color:          var(--kk-text);
+  font-size:      13px;
+  line-height:    1.5;
+  white-space:    pre-wrap;
+  border:         1px solid var(--kk-border-light);
+  border-radius:  4px;
+  background:     rgba(0,0,0,0.15);
+  box-sizing:     border-box;
+}
+
+.kk-textarea-readonly-tall {
+  min-height:     140px;
+}
+
+.kk-placeholder {
+  color:          var(--kk-text-muted);
+  font-style:     italic;
+}
+
+/* Masquer les inputs en mode lecture (au cas où) */
+.kk-read-mode input[type="text"],
+.kk-read-mode input[type="number"],
+.kk-read-mode select,
+.kk-read-mode textarea {
+  pointer-events: none;
+}
+
+/* ============================================================
+   POINTS DE VIE — contrôles +/−
+   ============================================================ */
+
+.kk-hp-controls {
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  gap:            12px;
+  margin-bottom:  8px;
+}
+
+.kk-hp-btn {
+  width:          32px;
+  height:         32px;
+  border-radius:  50%;
+  border:         1px solid var(--kk-gold);
+  background:     rgba(0,0,0,0.3);
+  color:          var(--kk-gold);
+  font-size:      18px;
+  line-height:    1;
+  cursor:         pointer;
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  transition:     background 0.15s, transform 0.1s;
+}
+
+.kk-hp-btn:hover {
+  background:     var(--kk-gold);
+  color:          #1a1209;
+  transform:      scale(1.1);
+}
+
+.kk-hp-bar-wrapper {
+  display:        flex;
+  align-items:    center;
+  gap:            6px;
+  font-family:    var(--kk-font-title);
+  font-size:      22px;
+}
+
+.kk-hp-current {
+  color:          var(--kk-gold);
+  font-weight:    bold;
+}
+
+.kk-hp-sep {
+  color:          var(--kk-text-muted);
+}
+
+.kk-hp-max {
+  color:          var(--kk-text-muted);
+  font-size:      16px;
+}
+
+.kk-hp-note {
+  text-align:     center;
+  font-size:      11px;
+  color:          var(--kk-text-muted);
+  font-style:     italic;
+  margin-top:     6px;
+}
+
+/* ============================================================
+   FOOTER — toggle mode édition
+   ============================================================ */
+
+.kk-footer {
+  padding:        12px 16px;
+  display:        flex;
+  justify-content: center;
+  border-top:     1px solid var(--kk-border-light);
+  margin-top:     8px;
+}
+
+.kk-edit-toggle {
+  padding:        8px 20px;
+  border-radius:  20px;
+  border:         1px solid var(--kk-border-light);
+  background:     rgba(0,0,0,0.2);
+  color:          var(--kk-text-muted);
+  font-size:      13px;
+  cursor:         pointer;
+  transition:     all 0.2s;
+  letter-spacing: 0.04em;
+}
+
+.kk-edit-toggle:hover {
+  border-color:   var(--kk-gold);
+  color:          var(--kk-text);
+}
+
+.kk-edit-toggle-active {
+  border-color:   var(--kk-gold) !important;
+  background:     rgba(180, 140, 40, 0.15) !important;
+  color:          var(--kk-gold) !important;
+}
+
+.kk-edit-badge {
+  display:        inline-block;
+  background:     var(--kk-gold);
+  color:          #1a1209;
+  font-size:      10px;
+  font-weight:    bold;
+  padding:        1px 6px;
+  border-radius:  10px;
+  margin-left:    6px;
+  vertical-align: middle;
+  letter-spacing: 0.08em;
+}
