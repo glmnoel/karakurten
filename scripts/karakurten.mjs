@@ -14,6 +14,13 @@ Hooks.once("init", () => {
   console.log("Karakurten | Initialisation du système");
 
   // Enregistrement des feuilles d'acteur
+  /*Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet("karakurten", KarakurtenActorSheet, {
+    types: ["personnage"],
+    makeDefault: true,
+    label: "Feuille de Personnage Karakurten"
+  });
+  */
 
  foundry.documents.collections.Actors.registerSheet(
 		"karakurten",
@@ -21,7 +28,7 @@ Hooks.once("init", () => {
 		{
 			types: ["personnage"],
 			makeDefault: true,
-      		label: "Feuille de Personnage Karakurten"
+      label: "Feuille de Personnage Karakurten"
 		}
 	);
 
