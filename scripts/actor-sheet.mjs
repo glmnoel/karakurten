@@ -11,6 +11,13 @@ const { ActorSheetV2 } = foundry.applications.sheets;
 export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   /* ------------------------------------------ */
+  /*  État interne                               */
+  /* ------------------------------------------ */
+
+  /** @type {boolean} Mode édition actif ou non */
+  #editMode = false;
+
+  /* ------------------------------------------ */
   /*  Configuration statique                     */
   /* ------------------------------------------ */
 
@@ -24,9 +31,12 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
       resizable: true
     },
     actions: {
-      "roll-stat":   KarakurtenActorSheet.#onRollStat,
-      "stat-minus":  KarakurtenActorSheet.#onStatMinus,
-      "stat-plus":   KarakurtenActorSheet.#onStatPlus
+      "roll-stat":      KarakurtenActorSheet.#onRollStat,
+      "stat-minus":     KarakurtenActorSheet.#onStatMinus,
+      "stat-plus":      KarakurtenActorSheet.#onStatPlus,
+      "hp-minus":       KarakurtenActorSheet.#onHpMinus,
+      "hp-plus":        KarakurtenActorSheet.#onHpPlus,
+      "toggle-edit":    KarakurtenActorSheet.#onToggleEdit
     }
   };
 
@@ -42,10 +52,34 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
 
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
-    context.document = this.document;
-    context.system  = this.document.system;
-    context.config  = CONFIG.KARAKURTEN ?? {};
+    context.document  = this.document;
+    context.system    = this.document.system;
+    context.config    = CONFIG.KARAKURTEN ?? {};
+    context.editMode  = this.#editMode;
+
+    // HP max = valeur de Force
+    const force = this.document.system.statistiques?.force?.valeur ?? 10;
+    context.hpMax = force;
+
     return context;
+  }
+
+  /* ------------------------------------------ */
+  /*  Listeners & sauvegarde des champs texte    */
+  /* ------------------------------------------ */
+
+  _onRender(context, options) {
+    super._onRender?.(context, options);
+
+    // Sauvegarde des champs texte/select lors du blur (perte de focus)
+    const sheet = this.element;
+    sheet.querySelectorAll("input[name], select[name], textarea[name]").forEach(el => {
+      el.addEventListener("change", async (ev) => {
+        const name  = ev.currentTarget.name;
+        const value = ev.currentTarget.value;
+        await this.document.update({ [name]: value });
+      });
+    });
   }
 
   /* ------------------------------------------ */
@@ -54,8 +88,6 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
 
   /**
    * Ouvre la boîte de dialogue de jet pour une statistique.
-   * @param {PointerEvent} event
-   * @param {HTMLElement}  target
    */
   static async #onRollStat(event, target) {
     const statKey = target.dataset.stat;
@@ -64,12 +96,23 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
 
   /**
    * Diminue la valeur d'une statistique (min 1).
+   * Si la stat est la Force, ajuste aussi les HP.
    */
   static async #onStatMinus(event, target) {
     const statKey = target.dataset.stat;
     const current = this.document.system.statistiques[statKey].valeur;
     if (current <= 1) return;
-    await this.document.update({ [`system.statistiques.${statKey}.valeur`]: current - 1 });
+
+    const updates = { [`system.statistiques.${statKey}.valeur`]: current - 1 };
+
+    // Si on diminue la Force, les HP max diminuent aussi
+    if (statKey === "force") {
+      const newMax  = current - 1;
+      const hpVal   = this.document.system.pointsDeVie.valeur;
+      updates["system.pointsDeVie.valeur"] = Math.min(hpVal, newMax);
+    }
+
+    await this.document.update(updates);
   }
 
   /**
@@ -80,6 +123,51 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
     const current = this.document.system.statistiques[statKey].valeur;
     if (current >= 9) return;
     await this.document.update({ [`system.statistiques.${statKey}.valeur`]: current + 1 });
+  }
+
+  /**
+   * Diminue les HP de 1.
+   * Fait aussi baisser la Force temporaire d'autant (sans descendre sous 1).
+   */
+  static async #onHpMinus(event, target) {
+    const hp       = this.document.system.pointsDeVie.valeur;
+    const force    = this.document.system.statistiques.force.valeur;
+    if (hp <= 0) return;
+
+    const newHp    = hp - 1;
+    const newForce = Math.max(1, force - 1);
+
+    await this.document.update({
+      "system.pointsDeVie.valeur":            newHp,
+      "system.statistiques.force.valeur":     newForce
+    });
+  }
+
+  /**
+   * Augmente les HP de 1 (max = valeur de Force).
+   * Fait aussi remonter la Force d'autant (max 9).
+   */
+  static async #onHpPlus(event, target) {
+    const force    = this.document.system.statistiques.force.valeur;
+    const hp       = this.document.system.pointsDeVie.valeur;
+    const hpMax    = force; // HP max est toujours égal à la Force
+    if (hp >= hpMax) return;
+
+    const newHp    = hp + 1;
+    const newForce = Math.min(9, force + 1);
+
+    await this.document.update({
+      "system.pointsDeVie.valeur":            newHp,
+      "system.statistiques.force.valeur":     newForce
+    });
+  }
+
+  /**
+   * Bascule le mode édition.
+   */
+  static async #onToggleEdit(event, target) {
+    this.#editMode = !this.#editMode;
+    this.render();
   }
 
   /* ------------------------------------------ */
