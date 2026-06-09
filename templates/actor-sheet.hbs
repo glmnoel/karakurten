@@ -3,11 +3,12 @@
   {{!-- HEADER: Photo + Identité --}}
   <header class="kk-header">
     <div class="kk-photo-wrapper">
-      <img class="kk-photo"
+      <img class="kk-photo kk-photo-clickable"
            src="{{document.system.identite.photographie}}"
-           data-edit="system.identite.photographie"
-           title="{{localize 'KARAKURTEN.Photographie'}}"
+           data-action="edit-portrait"
+           title="{{localize 'KARAKURTEN.PhotographieEdit'}}"
            onerror="this.src='icons/svg/mystery-man.svg'" />
+      <div class="kk-photo-overlay">✎</div>
     </div>
 
     <div class="kk-identite-grid">
@@ -140,13 +141,13 @@
     <section class="kk-section kk-hp-section">
       <h2 class="kk-section-title">{{localize "KARAKURTEN.PointsDeVie"}}</h2>
       <div class="kk-hp-controls">
-        <button type="button" class="kk-hp-btn kk-hp-minus" data-action="hp-minus" title="Blessure (−1 PV et −1 Force)">−</button>
+        <button type="button" class="kk-hp-btn kk-hp-minus" data-action="hp-minus" title="Blessure (−1 PV)">−</button>
         <div class="kk-hp-bar-wrapper">
           <span class="kk-hp-current">{{document.system.pointsDeVie.valeur}}</span>
           <span class="kk-hp-sep">/</span>
           <span class="kk-hp-max">{{hpMax}}</span>
         </div>
-        <button type="button" class="kk-hp-btn kk-hp-plus" data-action="hp-plus" title="Soin (+1 PV et +1 Force)">+</button>
+        <button type="button" class="kk-hp-btn kk-hp-plus" data-action="hp-plus" title="Soin (+1 PV)">+</button>
       </div>
       <div class="kk-hp-bar">
         <div class="kk-hp-fill"
