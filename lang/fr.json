@@ -34,5 +34,6 @@
     "TestDesavantage": "Test avec Désavantage",
     "ResultatTest": "Résultat : {resultat} / Seuil : {seuil}",
     "ResultatTestDouble": "Résultats : {d1} et {d2} / Seuil : {seuil}"
+    "ConstitutionLink" : "Les PVs sont liés à la Constitution."
   }
 }
