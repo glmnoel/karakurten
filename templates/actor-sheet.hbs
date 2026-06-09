@@ -110,6 +110,14 @@
             {{#if ../editMode}}
               <button type="button" class="kk-stat-btn kk-stat-minus" data-action="stat-minus" data-stat="{{key}}">−</button>
             {{/if}}
+            {{#if (eq key "force")}}
+              {{#if (neq ../document.system.pointsDeVie.valeur stat.valeur)}}        
+                <div class="kk-stat-value kk-rollable" data-action="roll-stat" data-stat="{{key}}" title="Cliquer pour lancer le dé">
+                  {{../document.system.pointsDeVie.valeur}}
+                </div>
+                <span class="kk-hp-sep">/</span>
+              {{/if}}
+            {{/if}}
             <div class="kk-stat-value kk-rollable" data-action="roll-stat" data-stat="{{key}}" title="Cliquer pour lancer le dé">
               {{stat.valeur}}
             </div>
@@ -145,7 +153,7 @@
              style="width: {{hpPercent document.system.pointsDeVie.valeur hpMax}}%">
         </div>
       </div>
-      <p class="kk-hp-note">⚔ Les PV sont liés à la Force — blessure et soin modifient les deux</p>
+      <p class="kk-hp-note">⚔ Les PV sont liés à la Consitution — blessure et soin modifient les deux</p>
     </section>
 
     {{!-- COMPÉTENCES --}}
