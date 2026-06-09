@@ -34,5 +34,6 @@
     "TestDesavantage": "Disadvantage Test",
     "ResultatTest": "Result: {resultat} / Threshold: {seuil}",
     "ResultatTestDouble": "Results: {d1} and {d2} / Threshold: {seuil}"
+    "ConstitutionLink" : "HPs are linked to Constitution."
   }
 }
