@@ -36,7 +36,8 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
       "stat-plus":      KarakurtenActorSheet.#onStatPlus,
       "hp-minus":       KarakurtenActorSheet.#onHpMinus,
       "hp-plus":        KarakurtenActorSheet.#onHpPlus,
-      "toggle-edit":    KarakurtenActorSheet.#onToggleEdit
+      "toggle-edit":      KarakurtenActorSheet.#onToggleEdit,
+      "edit-portrait":    KarakurtenActorSheet.#onEditPortrait
     }
   };
 
@@ -167,10 +168,24 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
   }
 
   /* ------------------------------------------ */
-  /*  Gestion de la photo (drag & drop)          */
+  /*  Gestion de la photo                        */
   /* ------------------------------------------ */
 
-  _onDropImage(event) {
-    // Foundry gère nativement le data-edit sur l'img
+  /**
+   * Ouvre un FilePicker pour choisir la photographie du personnage.
+   * Déclenché par le clic sur l'image (data-action="edit-portrait").
+   */
+  static async #onEditPortrait(event, target) {
+    const current = this.document.system.identite.photographie || "";
+    const fp = new FilePicker({
+      type: "image",
+      current: current,
+      callback: async (path) => {
+        await this.document.update({ "system.identite.photographie": path });
+      },
+      top:  this.position.top  + 40,
+      left: this.position.left + 10
+    });
+    fp.browse(current);
   }
 }
