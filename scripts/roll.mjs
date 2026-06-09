@@ -124,11 +124,10 @@ export class KarakurtenRoll {
     `;
 
     await ChatMessage.create({
-      user:    game.user.id,
       speaker: ChatMessage.getSpeaker({ actor }),
       content: chatContent,
       rolls:   [], // Les rolls sont affichés manuellement dans le contenu
-      type:    CONST.CHAT_MESSAGE_STYLES?.OTHER ?? 0
+      style:    CONST.CHAT_MESSAGE_STYLES.ROLL
     });
   }
 }
