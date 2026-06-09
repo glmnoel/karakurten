@@ -135,11 +135,9 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
     if (hp <= 0) return;
 
     const newHp    = hp - 1;
-    const newForce = Math.max(1, force - 1);
 
     await this.document.update({
-      "system.pointsDeVie.valeur":            newHp,
-      "system.statistiques.force.valeur":     newForce
+      "system.pointsDeVie.valeur":            newHp
     });
   }
 
@@ -154,11 +152,9 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
     if (hp >= hpMax) return;
 
     const newHp    = hp + 1;
-    const newForce = Math.min(9, force + 1);
 
     await this.document.update({
-      "system.pointsDeVie.valeur":            newHp,
-      "system.statistiques.force.valeur":     newForce
+      "system.pointsDeVie.valeur":            newHp
     });
   }
 
