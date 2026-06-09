@@ -13,7 +13,6 @@
     "Langue": "Langue maternelle",
     "Profession": "Profession",
     "Photographie": "Photographie",
-    "PhotographieEdit": "Cliquer pour changer la photographie",
     "Statistiques": "Statistiques",
     "Force": "Force / Constitution",
     "Agilite": "Agilité / Dextérité",
@@ -22,6 +21,8 @@
     "Competences": "Compétences particulières",
     "Historique": "Historique",
     "PointsDeVie": "Points de Vie",
+    "ModeEdition": "Mode Édition",
+    "ModeLecture": "Mode Lecture",
     "Test": "Test",
     "TypeTest": "Type de test",
     "Simple": "Simple",
@@ -34,7 +35,6 @@
     "TestAvantage": "Test avec Avantage",
     "TestDesavantage": "Test avec Désavantage",
     "ResultatTest": "Résultat : {resultat} / Seuil : {seuil}",
-    "ResultatTestDouble": "Résultats : {d1} et {d2} / Seuil : {seuil}",
-    "ConstitutionLink": "Les PVs sont liés à la Constitution."
+    "ResultatTestDouble": "Résultats : {d1} et {d2} / Seuil : {seuil}"
   }
 }
