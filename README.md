@@ -18,9 +18,6 @@ karakurten/
 ├── system.json           ← Manifeste du système
 ├── template.json         ← Structure des données
 ├── README.md
-├── assets/
-│   └──scenes/
-│      └──scene-default.jpg
 ├── lang/
 │   ├── fr.json           ← Traduction française
 │   └── en.json           ← Traduction anglaise
