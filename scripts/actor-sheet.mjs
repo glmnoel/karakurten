@@ -36,8 +36,8 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
       "stat-plus":      KarakurtenActorSheet.#onStatPlus,
       "hp-minus":       KarakurtenActorSheet.#onHpMinus,
       "hp-plus":        KarakurtenActorSheet.#onHpPlus,
-      "toggle-edit":      KarakurtenActorSheet.#onToggleEdit,
-      "edit-portrait":    KarakurtenActorSheet.#onEditPortrait
+      "toggle-edit":    KarakurtenActorSheet.#onToggleEdit,
+      "edit-portrait":  KarakurtenActorSheet.#onEditPortrait
     }
   };
 
@@ -168,14 +168,10 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
   }
 
   /* ------------------------------------------ */
-  /*  Gestion de la photo                        */
+  /*  Gestion de la photo (drag & drop)          */
   /* ------------------------------------------ */
 
-  /**
-   * Ouvre un FilePicker pour choisir la photographie du personnage.
-   * Déclenché par le clic sur l'image (data-action="edit-portrait").
-   */
-  static async #onEditPortrait(event, target) {
+    static async #onEditPortrait(event, target) {
     const current = this.document.system.identite.photographie || "";
     const fp = new FilePicker({
       type: "image",

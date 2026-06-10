@@ -2,8 +2,8 @@
  * Karakurten — Logique de Jets de Dés
  *
  * Mécaniques :
- *  - Simple    : 1d10 ≤ seuil → réussite
- *  - Avantage  : 2d10, 1 seul résultat ≤ seuil → réussite
+ *  - Simple      : 1d10 ≤ seuil → réussite
+ *  - Avantage    : 2d10, au moins 1 résultat ≤ seuil → réussite
  *  - Désavantage : 2d10, les DEUX résultats ≤ seuil → réussite
  */
 
@@ -69,45 +69,37 @@ export class KarakurtenRoll {
    */
   static async executeRoll(actor, statKey, typeTest) {
     const stat  = actor.system.statistiques[statKey];
-    let seuil = stat.valeur;
-    
-    if (stat === "force") {
-      seuil = actor.system.pointsDeVie;
-    }
+    const seuil = stat.valeur;
 
     let reussite  = false;
-    let rolls     = [];
+    let rollObjs  = [];   // objets Roll natifs → animation + affichage Foundry
     let typeLabel = "";
     let detail    = "";
 
     if (typeTest === "simple") {
-      // --- Test simple : 1d10 ---
-      const roll = await new Roll("1d10").evaluate();
-      rolls = [roll.total];
-      reussite  = rolls[0] <= seuil;
+      const r = await new Roll("1d10").evaluate();
+      rollObjs  = [r];
+      reussite  = r.total <= seuil;
       typeLabel = "Test Simple";
-      detail    = `Résultat : <strong>${rolls[0]}</strong> / Seuil : <strong>${seuil}</strong>`;
+      detail    = `Résultat : <strong>${r.total}</strong> / Seuil : <strong>${seuil}</strong>`;
 
     } else if (typeTest === "avantage") {
-      // --- Avantage : 2d10, au moins un ≤ seuil ---
       const r1 = await new Roll("1d10").evaluate();
       const r2 = await new Roll("1d10").evaluate();
-      rolls    = [r1.total, r2.total];
-      reussite  = rolls[0] <= seuil || rolls[1] <= seuil;
+      rollObjs  = [r1, r2];
+      reussite  = r1.total <= seuil || r2.total <= seuil;
       typeLabel = "Test avec Avantage";
-      detail    = `Résultats : <strong>${rolls[0]}</strong> et <strong>${rolls[1]}</strong> / Seuil : <strong>${seuil}</strong>`;
+      detail    = `Résultats : <strong>${r1.total}</strong> et <strong>${r2.total}</strong> / Seuil : <strong>${seuil}</strong>`;
 
     } else if (typeTest === "desavantage") {
-      // --- Désavantage : 2d10, les deux ≤ seuil ---
       const r1 = await new Roll("1d10").evaluate();
       const r2 = await new Roll("1d10").evaluate();
-      rolls    = [r1.total, r2.total];
-      reussite  = rolls[0] <= seuil && rolls[1] <= seuil;
+      rollObjs  = [r1, r2];
+      reussite  = r1.total <= seuil && r2.total <= seuil;
       typeLabel = "Test avec Désavantage";
-      detail    = `Résultats : <strong>${rolls[0]}</strong> et <strong>${rolls[1]}</strong> / Seuil : <strong>${seuil}</strong>`;
+      detail    = `Résultats : <strong>${r1.total}</strong> et <strong>${r2.total}</strong> / Seuil : <strong>${seuil}</strong>`;
     }
 
-    // --- Construction du message de chat ---
     const resultatLabel = reussite
       ? `<span class="kk-reussite">✅ Réussite</span>`
       : `<span class="kk-echec">❌ Échec</span>`;
@@ -123,11 +115,14 @@ export class KarakurtenRoll {
       </div>
     `;
 
+    // Passer les objets Roll dans "rolls" déclenche :
+    //  - l'animation native des dés dans Foundry v14
+    //  - l'animation 3D si Dice So Nice est installé
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor }),
       content: chatContent,
-      rolls:   [], // Les rolls sont affichés manuellement dans le contenu
-      style:    CONST.CHAT_MESSAGE_STYLES.ROLL
+      rolls:   rollObjs,
+      style:   CONST.CHAT_MESSAGE_STYLES.ROLL
     });
   }
 }
