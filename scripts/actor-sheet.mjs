@@ -31,13 +31,13 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
       resizable: true
     },
     actions: {
-      "roll-stat":      KarakurtenActorSheet.#onRollStat,
-      "stat-minus":     KarakurtenActorSheet.#onStatMinus,
-      "stat-plus":      KarakurtenActorSheet.#onStatPlus,
-      "hp-minus":       KarakurtenActorSheet.#onHpMinus,
-      "hp-plus":        KarakurtenActorSheet.#onHpPlus,
-      "toggle-edit":    KarakurtenActorSheet.#onToggleEdit,
-      "edit-portrait":  KarakurtenActorSheet.#onEditPortrait
+      "roll-stat":        KarakurtenActorSheet.#onRollStat,
+      "stat-minus":       KarakurtenActorSheet.#onStatMinus,
+      "stat-plus":        KarakurtenActorSheet.#onStatPlus,
+      "hp-minus":         KarakurtenActorSheet.#onHpMinus,
+      "hp-plus":          KarakurtenActorSheet.#onHpPlus,
+      "toggle-edit":      KarakurtenActorSheet.#onToggleEdit,
+      "edit-portrait":    KarakurtenActorSheet.#onEditPortrait
     }
   };
 
@@ -76,9 +76,18 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
     const sheet = this.element;
     sheet.querySelectorAll("input[name], select[name], textarea[name]").forEach(el => {
       el.addEventListener("change", async (ev) => {
-        const name  = ev.currentTarget.name;
-        const value = ev.currentTarget.value;
-        await this.document.update({ [name]: value });
+        const fieldName = ev.currentTarget.name;
+        const value     = ev.currentTarget.value;
+        const updates   = { [fieldName]: value };
+
+        // Synchronise actor.name (liste acteurs, token) avec prénom + nom
+        if (fieldName === "system.identite.prenom" || fieldName === "system.identite.nom") {
+          const prenom = fieldName === "system.identite.prenom" ? value : (this.document.system.identite.prenom || "");
+          const nom    = fieldName === "system.identite.nom"    ? value : (this.document.system.identite.nom    || "");
+          updates["name"] = [prenom, nom].filter(Boolean).join(" ") || "Personnage";
+        }
+
+        await this.document.update(updates);
       });
     });
   }
@@ -128,35 +137,21 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
 
   /**
    * Diminue les HP de 1.
-   * Fait aussi baisser la Force temporaire d'autant (sans descendre sous 1).
    */
   static async #onHpMinus(event, target) {
-    const hp       = this.document.system.pointsDeVie.valeur;
-    const force    = this.document.system.statistiques.force.valeur;
+    const hp    = this.document.system.pointsDeVie.valeur;
     if (hp <= 0) return;
-
-    const newHp    = hp - 1;
-
-    await this.document.update({
-      "system.pointsDeVie.valeur":            newHp
-    });
+    await this.document.update({ "system.pointsDeVie.valeur": hp - 1 });
   }
 
   /**
    * Augmente les HP de 1 (max = valeur de Force).
-   * Fait aussi remonter la Force d'autant (max 9).
    */
   static async #onHpPlus(event, target) {
-    const force    = this.document.system.statistiques.force.valeur;
-    const hp       = this.document.system.pointsDeVie.valeur;
-    const hpMax    = force; // HP max est toujours égal à la Force
-    if (hp >= hpMax) return;
-
-    const newHp    = hp + 1;
-
-    await this.document.update({
-      "system.pointsDeVie.valeur":            newHp
-    });
+    const force = this.document.system.statistiques.force.valeur;
+    const hp    = this.document.system.pointsDeVie.valeur;
+    if (hp >= force) return;
+    await this.document.update({ "system.pointsDeVie.valeur": hp + 1 });
   }
 
   /**
@@ -168,16 +163,20 @@ export class KarakurtenActorSheet extends HandlebarsApplicationMixin(ActorSheetV
   }
 
   /* ------------------------------------------ */
-  /*  Gestion de la photo (drag & drop)          */
+  /*  Gestion de la photo                        */
   /* ------------------------------------------ */
 
-    static async #onEditPortrait(event, target) {
-    const current = this.document.system.identite.photographie || "";
+  /**
+   * Ouvre un FilePicker pour choisir la photographie du personnage.
+   * Déclenché par le clic sur l'image (data-action="edit-portrait").
+   */
+  static async #onEditPortrait(event, target) {
+    const current = this.document.system.identite.photographie || this.document.img || "";
     const fp = new FilePicker({
       type: "image",
       current: current,
       callback: async (path) => {
-        await this.document.update({ "system.identite.photographie": path });
+        await this.document.update({ "img": path, "system.identite.photographie": path });
       },
       top:  this.position.top  + 40,
       left: this.position.left + 10
