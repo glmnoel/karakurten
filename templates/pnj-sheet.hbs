@@ -1,0 +1,74 @@
+<div class="kk-sheet kk-pnj-sheet {{#if editMode}}kk-edit-mode{{else}}kk-read-mode{{/if}}">
+
+  {{!-- HEADER: Portrait + Identité --}}
+  <header class="kk-header kk-pnj-header">
+
+    <div class="kk-photo-wrapper">
+      <img class="kk-photo kk-photo-clickable"
+           src="{{document.system.identite.portrait}}"
+           data-action="edit-portrait"
+           title="{{localize 'KARAKURTEN.PortraitEdit'}}"
+           onerror="this.src='icons/svg/mystery-man.svg'" />
+      <div class="kk-photo-overlay">✎</div>
+    </div>
+
+    <div class="kk-pnj-identite">
+      <div class="kk-field">
+        <label>{{localize "KARAKURTEN.Prenom"}}</label>
+        {{#if editMode}}
+          <input type="text" name="system.identite.prenom"
+                 value="{{document.system.identite.prenom}}" placeholder="—"/>
+        {{else}}
+          <span class="kk-field-value">{{#if document.system.identite.prenom}}{{document.system.identite.prenom}}{{else}}<span class="kk-placeholder">—</span>{{/if}}</span>
+        {{/if}}
+      </div>
+      <div class="kk-field">
+        <label>{{localize "KARAKURTEN.Nom"}}</label>
+        {{#if editMode}}
+          <input type="text" name="system.identite.nom"
+                 value="{{document.system.identite.nom}}" placeholder="—"/>
+        {{else}}
+          <span class="kk-field-value">{{#if document.system.identite.nom}}{{document.system.identite.nom}}{{else}}<span class="kk-placeholder">—</span>{{/if}}</span>
+        {{/if}}
+      </div>
+    </div>
+
+  </header>
+
+  {{!-- CORPS --}}
+  <div class="kk-body kk-pnj-body">
+
+    <section class="kk-section">
+      <h2 class="kk-section-title">{{localize "KARAKURTEN.Description"}}</h2>
+      {{#if editMode}}
+        <textarea class="kk-textarea kk-textarea-tall kk-pnj-description"
+                  name="system.identite.description"
+                  placeholder="Description du personnage…">{{document.system.identite.description}}</textarea>
+      {{else}}
+        <div class="kk-textarea-readonly kk-textarea-readonly-tall kk-pnj-description-readonly">
+          {{#if document.system.identite.description}}
+            {{document.system.identite.description}}
+          {{else}}
+            <span class="kk-placeholder">—</span>
+          {{/if}}
+        </div>
+      {{/if}}
+    </section>
+
+  </div>
+
+  {{!-- FOOTER --}}
+  <footer class="kk-footer">
+    <button type="button"
+            class="kk-edit-toggle {{#if editMode}}kk-edit-toggle-active{{/if}}"
+            data-action="toggle-edit"
+            title="{{#if editMode}}Quitter le mode édition{{else}}Passer en mode édition{{/if}}">
+      {{#if editMode}}
+        ✏️ Mode Édition <span class="kk-edit-badge">ACTIF</span>
+      {{else}}
+        🔒 Mode Lecture — Cliquer pour éditer
+      {{/if}}
+    </button>
+  </footer>
+
+</div>

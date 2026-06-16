@@ -32,12 +32,29 @@
   ],
   "documentTypes": {
     "Actor": {
-      "personnage": {}
+      "personnage": {},
+      "pnj": {}
     },
     "Item": {}
   },
+  "packs": [
+    {
+      "name": "personnages",
+      "label": "Personnages Karakurten",
+      "path": "packs/personnages",
+      "type": "Actor",
+      "system": "karakurten"
+    },
+    {
+      "name": "scenes",
+      "label": "Scènes Karakurten",
+      "path": "packs/scenes",
+      "type": "Scene",
+      "system": "karakurten"
+    }
+  ],
   "socket": false,
-  "url": "",
-  "manifest": "",
-  "download": ""
+  "url": "https://github.com/glmnoel/karakurten",
+  "manifest": "https://raw.githubusercontent.com/glmoel/karakurten/main/system.json",  
+  "download": "https://github.com/glmnoel/karakurten/releases/latest/download/karakurten.zip"  
 }

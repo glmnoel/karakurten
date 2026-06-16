@@ -1,6 +1,9 @@
 {
   "Actor": {
-    "types": ["personnage"],
+    "types": [
+      "personnage",
+      "pnj"
+    ],
     "personnage": {
       "identite": {
         "nom": "",
@@ -43,6 +46,14 @@
       "historique": "",
       "pointsDeVie": {
         "valeur": 5
+      }
+    },
+    "pnj": {
+      "identite": {
+        "nom": "",
+        "prenom": "",
+        "portrait": "",
+        "description": ""
       }
     }
   },

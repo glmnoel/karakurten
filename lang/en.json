@@ -13,6 +13,7 @@
     "Langue": "Mother Tongue",
     "Profession": "Profession",
     "Photographie": "Photograph",
+    "PhotographieEdit": "Click to change the photograph",
     "Statistiques": "Statistics",
     "Force": "Strength / Constitution",
     "Agilite": "Agility / Dexterity",
@@ -21,8 +22,6 @@
     "Competences": "Special Skills",
     "Historique": "Background",
     "PointsDeVie": "Hit Points",
-    "ModeEdition": "Edit Mode",
-    "ModeLecture": "Read Mode",
     "Test": "Roll",
     "TypeTest": "Roll Type",
     "Simple": "Simple",
@@ -35,6 +34,10 @@
     "TestAvantage": "Advantage Test",
     "TestDesavantage": "Disadvantage Test",
     "ResultatTest": "Result: {resultat} / Threshold: {seuil}",
-    "ResultatTestDouble": "Results: {d1} and {d2} / Threshold: {seuil}"
+    "ResultatTestDouble": "Results: {d1} and {d2} / Threshold: {seuil}",
+    "ConstitutionLink": "HPs are linked to Constitution.",
+    "Description": "Description",
+    "PortraitEdit": "Click to change the portrait",
+    "TypePNJ": "Non-Player Character"
   }
 }

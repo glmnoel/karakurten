@@ -5,6 +5,7 @@
 
 import { KarakurtenActorSheet } from "./actor-sheet.mjs";
 import { KarakurtenRoll } from "./roll.mjs";
+import { KarakurtenPNJSheet } from "./pnj-sheet.mjs";
 
 /* ------------------------------------------ */
 /*  Hooks d'initialisation                     */
@@ -14,23 +15,25 @@ Hooks.once("init", () => {
   console.log("Karakurten | Initialisation du système");
 
   // Enregistrement des feuilles d'acteur
-  /*Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("karakurten", KarakurtenActorSheet, {
-    types: ["personnage"],
-    makeDefault: true,
-    label: "Feuille de Personnage Karakurten"
-  });
-  */
-
- foundry.documents.collections.Actors.registerSheet(
-		"karakurten",
-		KarakurtenActorSheet,
-		{
-			types: ["personnage"],
-			makeDefault: true,
+  foundry.documents.collections.Actors.registerSheet(
+    "karakurten",
+    KarakurtenActorSheet,
+    {
+      types: ["personnage"],
+      makeDefault: true,
       label: "Feuille de Personnage Karakurten"
-		}
-	);
+    }
+  );
+
+  foundry.documents.collections.Actors.registerSheet(
+    "karakurten",
+    KarakurtenPNJSheet,
+    {
+      types: ["pnj"],
+      makeDefault: true,
+      label: "Feuille de PNJ Karakurten"
+    }
+  );
 
   // Helpers Handlebars
   _registerHandlebarsHelpers();
@@ -38,10 +41,43 @@ Hooks.once("init", () => {
   // Pré-chargement des templates
   foundry.applications.handlebars.loadTemplates([
     "systems/karakurten/templates/actor-sheet.hbs",
-    "systems/karakurten/templates/roll-dialog.hbs"
+    "systems/karakurten/templates/roll-dialog.hbs",
+    "systems/karakurten/templates/pnj-sheet.hbs"
   ]);
 
   console.log("Karakurten | Système initialisé avec succès");
+});
+
+/* ------------------------------------------ */
+/*  Scène par défaut                           */
+/* ------------------------------------------ */
+
+Hooks.once("ready", async () => {
+  // Créer la scène par défaut uniquement si aucune scène n'existe encore
+  if (game.scenes.size === 0) {
+    try {
+      await Scene.create({
+        name: "Le Havre — Bureau de l'Inspecteur",
+        background: {
+          src: "systems/karakurten/assets/scenes/scene-defaut.jpg"
+        },
+        width: 1920,
+        height: 1080,
+        grid: {
+          type: 0,       // Pas de grille (grille désactivée)
+          size: 100
+        },
+        padding: 0,
+        tokenVision: false,
+        fogExploration: false,
+        globalLight: true,
+        navigation: true
+      });
+      console.log("Karakurten | Scène par défaut créée.");
+    } catch (err) {
+      console.warn("Karakurten | Impossible de créer la scène par défaut :", err);
+    }
+  }
 });
 
 /* ------------------------------------------ */
@@ -58,8 +94,8 @@ function _registerHandlebarsHelpers() {
   // Égalité
   Handlebars.registerHelper("eq", (a, b) => a === b);
 
-  // Difference
-  Handlebars.registerHelper("neq", (a, b) => a != b); 
+  // Différence
+  Handlebars.registerHelper("neq", (a, b) => a != b);
 
   // Pourcentage HP (clampé entre 0 et 100)
   Handlebars.registerHelper("hpPercent", (current, max) => {
