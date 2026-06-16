@@ -15,28 +15,36 @@
 
 ```
 karakurten/
-├── system.json           ← Manifeste du système
-├── template.json         ← Structure des données
+├── system.json              ← Manifeste du système
+├── template.json            ← Structure des données
 ├── README.md
+├── assets/
+│   ├── portraits/PJs        ← Portraits des PJs
+│   ├── scenars              ← Ressources du scénar d'intro
+│   └── scenes               ← Images scenes par défaut + scénar d'intro
 ├── lang/
-│   ├── fr.json           ← Traduction française
-│   └── en.json           ← Traduction anglaise
+│   ├── fr.json              ← Traduction française
+│   └── en.json              ← Traduction anglaise
+├── packs/
+│   ├── karakurten-acteurs   ← Les PJs pré-tirés
+│   ├── karakurten-journaux  ← Le Journal des ressources du scénar d'intro
+│   └── karakurten-scenes    ← Scenes par défaut + scénar d'intro
 ├── scripts/
-│   ├── karakurten.mjs    ← Point d'entrée
-│   ├── actor-sheet.mjs   ← Feuille de personnage (ApplicationV2)
-│   └── roll.mjs          ← Logique des jets de dés
+│   ├── karakurten.mjs       ← Point d'entrée
+│   ├── actor-sheet.mjs      ← Feuille de personnage (ApplicationV2)
+│   └── roll.mjs             ← Logique des jets de dés
 ├── styles/
-│   └── karakurten.css    ← Styles de la feuille
+│   └── karakurten.css       ← Styles de la feuille
 └── templates/
-    ├── actor-sheet.hbs   ← Template Handlebars de la feuille
-    └── roll-dialog.hbs   ← Template de la fenêtre de jet
+    ├── actor-sheet.hbs      ← Template Handlebars de la feuille
+    └── roll-dialog.hbs      ← Template de la fenêtre de jet
 ```
 
 ## Mécaniques de jeu
 
 ### Statistiques
 4 statistiques de 1 à 9 :
-- Force / Constitution
+- Force / Constitution (lié aux PV)
 - Agilité / Dextérité
 - Intelligence / Psychologie
 - Sens de l'Observation / Anticipation
