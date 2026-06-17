@@ -62,6 +62,6 @@
   ],
   "socket": false,
   "url": "https://github.com/glmnoel/karakurten",
-  "manifest": "https://raw.githubusercontent.com/glmoel/karakurten/main/system.json",  
+  "manifest": "https://raw.githubusercontent.com/glmnoel/karakurten/main/system.json",  
   "download": "https://github.com/glmnoel/karakurten/releases/latest/download/karakurten.zip"  
 }
