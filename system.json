@@ -56,7 +56,7 @@
       "name": "journaux",
       "label": "Journaux Karakurten",
       "path": "packs/journaux",
-      "type": "Journal",
+      "type": "JournalEntry",
       "system": "karakurten"
     }
   ],
