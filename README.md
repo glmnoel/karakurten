@@ -16,7 +16,6 @@
 ```
 karakurten/
 ├── system.json              ← Manifeste du système
-├── template.json            ← Structure des données
 ├── README.md
 ├── assets/
 │   ├── portraits/PJs        ← Portraits des PJs
@@ -31,6 +30,7 @@ karakurten/
 │   └── karakurten-scenes    ← Scenes par défaut + scénar d'intro
 ├── scripts/
 │   ├── karakurten.mjs       ← Point d'entrée
+│   ├── models.mjs           ← Modèles de données
 │   ├── actor-sheet.mjs      ← Feuille de personnage (ApplicationV2)
 │   └── roll.mjs             ← Logique des jets de dés
 ├── styles/
