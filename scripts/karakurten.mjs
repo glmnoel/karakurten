@@ -3,6 +3,7 @@
  * Point d'entrée principal
  */
 
+import { PersonnageData, PnjData } from "./models.mjs";
 import { KarakurtenActorSheet } from "./actor-sheet.mjs";
 import { KarakurtenRoll } from "./roll.mjs";
 import { KarakurtenPNJSheet } from "./pnj-sheet.mjs";
@@ -14,6 +15,12 @@ import { KarakurtenPNJSheet } from "./pnj-sheet.mjs";
 Hooks.once("init", () => {
   console.log("Karakurten | Initialisation du système");
 
+  //Chargement des modèles
+  CONFIG.Actor.dataModels = {
+    personnage: PersonnageData,
+    pnj:        PnjData,
+  };
+  
   // Enregistrement des feuilles d'acteur
   foundry.documents.collections.Actors.registerSheet(
     "karakurten",
