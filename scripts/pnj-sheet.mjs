@@ -14,6 +14,17 @@ export class KarakurtenPNJSheet extends HandlebarsApplicationMixin(ActorSheetV2)
   #editMode = false;
 
   /* ------------------------------------------ */
+  /*  Titre de la fenêtre                        */
+  /* ------------------------------------------ */
+
+  get title() {
+    const prenom = this.document.system.identite.prenom || "";
+    const nom    = this.document.system.identite.nom    || "";
+    const nom_complet = [prenom, nom].filter(Boolean).join(" ");
+    return nom_complet || this.document.name || "Personnage";
+  }  
+
+  /* ------------------------------------------ */
   /*  Configuration statique                     */
   /* ------------------------------------------ */
 
